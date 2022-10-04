@@ -1,0 +1,111 @@
+.data-container {
+    margin-left: 25px;
+    width: 65%;
+}
+
+.block {
+    display: block;
+}
+
+.bold {
+    font-weight: bolder;
+}
+
+.m-t3 {
+    margin-top: 10px;
+}
+
+.m-y3 {
+    margin: 14px 0;
+}
+
+.m-r3 {
+    margin-right: 14px;
+}
+
+.m-l3 {
+    margin-left: 14px;
+}
+
+.m-b3{
+    margin-bottom: 24px;
+}
+
+small{
+    font-size: 10px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input {
+    width: 65%;
+    border: 0.7px solid grey;
+    padding: 8px;
+    resize: none;
+    font-family: inherit;
+}
+
+.smallInp{
+    width: 20%;
+    border: 0.7px solid grey;
+    padding: 7px;
+    resize: none;
+    font-family: inherit;
+}
+
+.smallInp:focus{
+    outline: none;
+}
+
+.input:focus {
+    outline: none;
+}
+
+.btn-outline {
+    border: 0.5px solid pink;
+    background-color: transparent;
+    color: palevioletred;
+    width: 83px;
+    height: 32px;
+}
+
+.btn {
+    border: none;
+    background-color: pink;
+    padding: 7px;
+}
+
+.discount {
+    width: 81%;
+    display: flex;
+    align-items: center;
+}
+
+.select {
+    width: 68%;
+}
+
+.option {
+    font-size: 16px;
+    padding: 15px;
+    border-bottom: 0.6px solid grey;
+}
+
+.btn-white{
+    background-color: white;
+    padding: 9px;
+    width: 150px;
+    border: 1px solid slategray;
+}
+
+.btn-grey{
+    background-color: lightslategrey;
+    padding: 10px;
+    width: 150px;
+    border: none;
+    color: white
+}
