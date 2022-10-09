@@ -43,7 +43,7 @@ function FreeShipping() {
             <datalist id="country_list">
             <option value="India"> India </option>{" "}
             <option value="America"> America </option>{" "}
-            <option value="Japan"> japan </option>{" "}
+            <option value="Japan"> Japan </option>{" "}
             <option value="Thailand"> Thailand </option>{" "}
             <option value="China"> China </option>{" "}
             <option value="Israel"> Israel </option>{" "}
@@ -51,11 +51,12 @@ function FreeShipping() {
             <option value="England"> England </option>{" "}
             <option value="Australia"> Australia </option>{" "}
             <option value="Nepal"> Nepal </option>{" "}
+            <option value="Bangladesh"> Bangladesh </option>{" "}
             
           </datalist>{" "}
 
             {countries? <div>
-                <input list='country_list' className="input m-y3" placeholder="search country" />
+                <input list='country_list' className="input m-y3 list" placeholder="search country" />
                 <button className="btn m-l3">Browse</button>
             </div> : ''}
         </>

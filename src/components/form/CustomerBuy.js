@@ -11,6 +11,7 @@ function CustomerBuy() {
                     type="radio"
                     id="minCustbuy"
                     name="radio"
+                    value='minimumQuantityOfItems'
                     className="m-r3"
                 />
                 <label htmlFor="minCustbuy">Minimun quantity of items</label>
@@ -21,6 +22,7 @@ function CustomerBuy() {
                     type="radio"
                     id="puchaseAmt"
                     name="radio"
+                    value='minimumQuantityOfAmount'
                     className="m-r3"
                 />
                 <label htmlFor="puchaseAmt">Minimum Purchase amount</label>
@@ -44,7 +46,7 @@ function CustomerBuy() {
             </select>
 
             <input type="text" className="input" placeholder="search products" />
-            <button className="btn m-l3">Browse</button>
+            <button type="button" className="btn m-l3">Browse</button>
             {/* ==== */}
 
             <CustomerGet/>

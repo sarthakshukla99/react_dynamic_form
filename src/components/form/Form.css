@@ -27,18 +27,22 @@
     margin-left: 14px;
 }
 
-.m-b3{
+.m-b3 {
     margin-bottom: 24px;
 }
 
-small{
+button{
+    cursor: pointer;
+}
+
+small {
     font-size: 10px;
 }
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 .input {
@@ -49,7 +53,7 @@ input::-webkit-inner-spin-button {
     font-family: inherit;
 }
 
-.smallInp{
+.smallInp {
     width: 20%;
     border: 0.7px solid grey;
     padding: 7px;
@@ -57,7 +61,7 @@ input::-webkit-inner-spin-button {
     font-family: inherit;
 }
 
-.smallInp:focus{
+.smallInp:focus {
     outline: none;
 }
 
@@ -79,6 +83,10 @@ input::-webkit-inner-spin-button {
     padding: 7px;
 }
 
+.discountContainer{
+    width: 81%;
+}
+
 .discount {
     width: 81%;
     display: flex;
@@ -95,17 +103,22 @@ input::-webkit-inner-spin-button {
     border-bottom: 0.6px solid grey;
 }
 
-.btn-white{
+.btn-white {
     background-color: white;
     padding: 9px;
     width: 150px;
     border: 1px solid slategray;
 }
 
-.btn-grey{
+.btn-grey {
     background-color: lightslategrey;
     padding: 10px;
     width: 150px;
     border: none;
     color: white
 }
+
+
+.list::-webkit-calendar-picker-indicator {
+    opacity: 0;
+  }

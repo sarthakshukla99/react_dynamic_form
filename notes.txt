@@ -1,0 +1,110 @@
+{
+    "couponClassification": 9,
+    "couponMonetaryValue": 100,
+    "couponName": "order222222",
+    "startDate": "2022-10-06",
+    "startTime": "18:00",
+    "endDate": "2022-12-28",
+    "endTime": "14:30",
+    "customerIds": [],
+    "isOncePerCustomer": false,
+    "usageLimit": 120,
+    "countryIds": [468906901762],
+    "allocationLimit": 10,
+    "valueType": "fixed_amount",
+    "prerequisiteQuantityOfItems": 10,
+    "prerequisiteSubtotalRange": 10,
+    "entitledCollectionIds": [401293345026],
+    "entitledProductIds": [],
+    "entitledCollectionIds": [401293345026],
+    "productIds": [7810687664386],
+    "variantIds": []
+    "prerequisiteQuantity" = "null",
+    "prerequisiteAmount"
+}
+
+
+
+couponClassification-           /d
+3: 'GV - X Amount off',
+7: 'Amount off on products',
+8: 'Free Shipping',
+9: 'Buy X items of A get B Free',
+
+customerIds - [6396146352386]
+
+isOncePerCustomer - true / false
+
+countryIds - [468906901762]
+
+valueType - "fixed_amount" / "percentage"           /d
+
+entitledCollectionIds - [401293345026]
+
+productIds - [7810687664386]
+
+"minimumQuantityOfItems": 10,
+"minimumPurchaseAmount": 10,
+
+"purchaseType": "1||2||3",                          /d
+
+
+
+
+
+
+{
+    "couponClassification": 9,
+    "couponMonetaryValue": 100,
+    "couponName": "order222222",
+    "startDate": "2022-10-06",
+    "startTime": "18:00",
+    "endDate": "2022-12-28",
+    "endTime": "14:30",
+    "customerIds": [],
+    "isOncePerCustomer": false,
+    "usageLimit": 120,
+    "countryIds": [468906901762],
+    "allocationLimit": 10,
+    "valueType": "fixed_amount",
+    "minimumQuantityOfItems": 10,
+"minimumPurchaseAmount": 10,
+"entitledQuantity":3,
+"entitledCollectionIds": [401293345026],
+    "entitledProductIds": [7810687664386],
+    "productIds": [7810687664386],
+    "variantIds": [],
+"purchaseType": "1||2||3",
+prerequisiteQuantity = null, prerequisiteAmount
+}
+
+
+
+
+
+
+
+
+
+
+
+console.log(data.couponClassification,
+            data.couponMonetaryValue,
+            data.couponName,
+            data.startDate,
+            data.startTime,
+            data.endDate,
+            data.endTime,
+            data.customerIds,
+            data.isOncePerCustomer,
+            data.usageLimit,
+            data.countryIds,
+            data.allocationLimit,
+            data.valueType,
+            data.minimumQuantityOfItems,
+            data.minimumPurchaseAmount,
+            data.entitledCollectionIds,
+            data.productIds,
+            data.termsAndConditions,
+            data.couponCode,
+            data.purchaseType);

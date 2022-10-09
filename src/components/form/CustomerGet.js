@@ -32,7 +32,7 @@ function CustomerGet() {
             </select>
 
             <input type="text" className="input" placeholder="search products" />
-            <button className="btn m-l3">Browse</button>
+            <button type='button' className="btn m-l3">Browse</button>
             {/* ==== */}
 
             <label className="block bold m-y3">At a discount value*</label>

@@ -1,6 +1,6 @@
 import React from "react";
 
-function PurchaseType() {
+function PurchaseType(props) {
     return (
         <>
             <label className="block bold m-y3">Purchase Type*</label>
@@ -9,7 +9,9 @@ function PurchaseType() {
                 <input
                     type="radio"
                     id="oneTime"
-                    name="radio"
+                    name="valueType"
+                    value='1'
+                    onChange={props.onInputVal}
                     className="m-r3"
                 />
                 <label htmlFor="oneTime">One Time Purchase</label>
@@ -19,14 +21,16 @@ function PurchaseType() {
                 <input
                     type="radio"
                     id="subcription"
-                    name="radio"
+                    name="valueType"
+                    value='2'
+                    onChange={props.onInputVal}
                     className="m-r3"
                 />
                 <label htmlFor="subcription">Subscription</label>
             </div>
 
             <div className="block m-t3">
-                <input type="radio" id="both" name="radio" className="m-r3" />
+                <input type="radio" id="both" name="valueType" value='3' onChange={props.onInputVal} className="m-r3" />
                 <label htmlFor="both">Both</label>
             </div>
         </>
