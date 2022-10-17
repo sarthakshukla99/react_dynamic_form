@@ -1,0 +1,48 @@
+.modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    width: 500px;
+    background-color: #fff;
+    height: 68vh;
+    overflow-y: scroll;
+}
+
+.modal-header{
+    position: fixed;
+    z-index: 10;
+    background: azure;
+    width: 460px;
+}
+
+.modal-header,
+.modal-footer {
+    padding: 10px;
+}
+
+
+.modal-title {
+    margin: 0;
+}
+
+.modal-body {
+    padding: 10px;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    height: inherit;
+    margin-top: 13vh;
+}
+
+input.check{
+    width: 21px;
+    height: 21px;
+}

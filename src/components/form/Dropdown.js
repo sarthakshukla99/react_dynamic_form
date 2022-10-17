@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Form.css";
 import "./Dropdown.css";
 import CustomerBuy from "./CustomerBuy";
@@ -13,18 +13,35 @@ function Dropdown(props) {
     const [percentVal, setPercentVal] = useState('20 %');
     const [fixedAmtVal, setFixedAmtVal] = useState('$ 200');
 
+    
+
     const handleChange = (e) => {
         // console.log(e.target.value);
-        if (e.target.value === "7" || e.target.value=== '3') {
+        if(e.target.value === "7"){
+            props.onHandleApplyTo(true)
             props.onHandleVisibility(true)
             props.onInputVal(e)
             setDropdownOpt(true);
+            setCustomBuy(false);
+            setShipping(false);
+        }
+        else if (e.target.value=== '3') {
+            props.onHandleApplyTo(false)
+            props.onHandleVisibility(true)
+            props.onInputVal(e)
+            setDropdownOpt(true);
+            setCustomBuy(false);
+            setShipping(false);
         } else if (e.target.value === "9") {
+            props.onHandleApplyTo(false)
             props.onHandleVisibility(false)
             props.onInputVal(e)
+
+            setShipping(false);
             setDropdownOpt(false);
             setCustomBuy(true);
         } else if (e.target.value === "8") {
+            props.onHandleApplyTo(false)
             props.onHandleVisibility(true)
             props.onInputVal(e)
             setDropdownOpt(false);
@@ -50,7 +67,7 @@ function Dropdown(props) {
         setPercentVal(e.target.value)
         setFixedAmtVal(e.target.value)
         props.onInputVal(e)
-        
+
     }
     return (
         <>
@@ -129,7 +146,7 @@ function Dropdown(props) {
                         ""
                     )}
                     <input
-                        type="text"
+                        type="number"
                         id="monetary"
                         className="input m-y3"
                         placeholder="Coupon Monetary value"
@@ -152,7 +169,15 @@ function Dropdown(props) {
             )}
 
             {/* ======= customer buy section */}
-            {customBuy ? <CustomerBuy /> : ""}
+            {customBuy ? <CustomerBuy
+                onData={props.onData}
+                onInputVal={props.onInputVal}
+                updateData={props.updateData}
+                setProducts={props.setProducts}
+                products={props.products}
+              />
+              : ""
+            }
 
             {Shipping ? <FreeShipping /> : ""}
         </>

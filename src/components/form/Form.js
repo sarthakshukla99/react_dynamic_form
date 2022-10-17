@@ -1,45 +1,102 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import AppliesTo from "./AppliesTo";
+import CustomerEligibility from "./CustomerEligibility";
 import Dropdown from "./Dropdown";
 import "./Form.css";
 import MinimumPurchase from "./MinimumPurchase";
 import PurchaseType from "./PurchaseType";
+import lodash from 'lodash'
+
 function Form() {
+    const [products, setProducts] = useState([]);
     const [data, setData] = useState({
         couponClassification: "",
-        couponMonetaryValue: "",
+        couponMonetaryValue: 100,
         couponName: "",
         startDate: "",
         startTime: "",
         endDate: "",
         endTime: "",
-        customerIds: [6396146352386],
-        isOncePerCustomer: "",
+        customerIds: [],
+        isOncePerCustomer: "false",
         usageLimit: "",
         countryIds: [468906901762],
-        allocationLimit: "10",
+        allocationLimit: "",
         valueType: "",
-        minimumQuantityOfItems: null,
+        minimumQuantityOfItems: "",
         minimumPurchaseAmount: "",
-        entitledCollectionIds: [401293345026],
-        productIds: [7810687664386],
+        entitledCollectionIds: [],
+        entitledProductIds: [],
+        entitledVariantIds: [],
+        productIds: [],
+        variantIds: [],
         termsAndConditions: "",
+        entitledQuantity: 1,
         couponCode: "",
-        purchaseType: "1",
+        purchaseType: "",
     });
 
     let name, value;
 
     const handleInput = (e) => {
-        // console.log(e.target.value);
         name = e.target.name;
         value = e.target.value;
+
+        if(e.target.name === 'minimumPurchaseAmount'){
+            setData({...data, minimumQuantityOfItems: "",[name]:value})
+            return 
+        }
+        else if(e.target.name === 'minimumQuantityOfItems'){
+            setData({...data, minimumPurchaseAmount: "",[name]:value})
+            return 
+        }
+
+        if(e.target.name === 'entitledCollectionIds'){
+            setData({...data, productIds: [],[name]:value})
+            return 
+        }
+        else if(e.target.name === 'productIds'){
+            setData({...data, entitledCollectionIds: [],[name]:value})
+            return 
+        }
+
+        if(data.valueType === 'free'){
+            setData({...data, couponMonetaryValue: 100,[name]:value})
+            return 
+        }
+
+        console.log(e.target.name, e.target.checked);
+        if(e.target.name === 'allocationBox' && !e.target.checked){
+            setData({...data, allocationLimit: '',[name]:value})
+            return 
+        }
+        
+        
+
 
         setData({ ...data, [name]: value });
     };
 
+    const updateData = (_data) => {
+      setData({...data, ..._data});
+    }
+
+    useEffect(() => {
+        setData({...data, productIds: [], variantIds: [], entitledProductIds: [], entitledVariantIds: [], entitledCollectionIds: [], minimumPurchaseAmount: "",
+        minimumQuantityOfItems: ""})
+    }, [data.couponClassification])
+
+    // if(data.minimumPurchaseAmount !== null || ""){
+    //     setData({...data, minimumQuantityOfItems: ""})
+    // }
+    // else if(data.minimumQuantityOfItems !== null || ""){
+    //     setData({...data, minimumPurchaseAmount: ""})
+    // }
+
+    // ======= api integration=========
     const postData = async (e) => {
         e.preventDefault();
-        const {
+        let {
             couponClassification,
             couponMonetaryValue,
             couponName,
@@ -56,13 +113,53 @@ function Form() {
             minimumQuantityOfItems,
             minimumPurchaseAmount,
             entitledCollectionIds,
+            entitledProductIds,
+            entitledVariantIds,
             productIds,
+            variantIds,
             termsAndConditions,
+            entitledQuantity,
             couponCode,
             purchaseType,
         } = data;
 
-        let API_URL = "https://demo-shopify-apis.frt.one";
+        let API_URL =
+            "https://demo-shopify-apis.frt.one/v1/couponspoc/save/details/indbAndShopify";
+
+        couponClassification = parseInt(couponClassification);
+        couponMonetaryValue = parseInt(couponMonetaryValue);
+        usageLimit = parseInt(usageLimit) || null;
+        allocationLimit = parseInt(allocationLimit) || null;
+        minimumPurchaseAmount = parseInt(minimumPurchaseAmount) || null;
+        minimumQuantityOfItems = parseInt(minimumQuantityOfItems) || null;
+        purchaseType = parseInt(purchaseType);
+
+        entitledProductIds = entitledProductIds.length > 0 ? entitledProductIds : null
+        entitledVariantIds = entitledVariantIds.length > 0 ? entitledVariantIds : null
+        entitledCollectionIds = entitledCollectionIds.length > 0 ? entitledCollectionIds : null
+        customerIds = customerIds.length > 0 ? customerIds : null
+        productIds = productIds.length > 0 ? productIds : []
+
+
+        // variantIds = variantIds.length > 0 ? variantIds : null
+        if(variantIds.length > 0) {
+          let _variantIds = [];
+          const _products = productIds.map(item => products.find(_item => _item.shopifyId == item));
+          _products.map(prod => {
+            const productId = prod.shopifyId;
+            const product = prod;
+            const _variants = product.variants.slice().map(item => item.id);
+            const common = lodash.intersection(variantIds, _variants);
+            if(common.length === _variants.length) {
+              variantIds = lodash.remove(variantIds, (n) => common.includes(n));
+            } else {
+              productIds.splice(productIds.indexOf(productId), 1);
+            }
+          })
+          // variantIds = _variantIds.slice();
+        } else {
+          variantIds = null;
+        }
 
         let userData = {
             couponClassification,
@@ -81,63 +178,73 @@ function Form() {
             minimumQuantityOfItems,
             minimumPurchaseAmount,
             entitledCollectionIds,
+            entitledProductIds,
+            entitledVariantIds,
             productIds,
-            termsAndConditions,
+            variantIds,
             couponCode,
+            termsAndConditions,
+            entitledQuantity,
             purchaseType,
         };
 
-        console.log(userData);
-
-// ========== using promise ==========
-
-        // fetch(API_URL, {
-        //     method: "POST",
-        //     headers: {
-        //         "Accept": "application/json",
-        //         "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify(userData),
-        // })
-        //     .then((result) => {
-        //         result.json()
-        //         .then((resultData) => {
-        //             console.log("INPUT DATA ===>", resultData);
-        //         });
-        //     })
-        //     .catch((err) => {
-        //         console.log("something went wrong", err);
-        //     });
-
-
-// ========== using async await  ==========
+        // console.log(userData);
 
         const response = await fetch(API_URL, {
-            method: 'POST',
+            method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
             },
-            body: JSON.stringify(userData)
-        }); 
+            body: JSON.stringify(userData),
+        });
 
         const apiData = await response.json();
 
-        if(!apiData){
-            window.alert('something went wrong')
-            console.log('something went wrong');
-        }
-        else{
-            window.alert('submitted successfully')
-            console.log('submitted successfully ==>', apiData);
+        if (!apiData) {
+            window.alert("something went wrong");
+            console.log("something went wrong");
+        } else {
+            window.alert("submitted successfully");
+            console.log("submitted successfully ==>", apiData);
         }
     };
+
 
     // ==============
     const [limitTimes, setLimitTimes] = useState(false);
     const [limitNumber, setLimitNumber] = useState();
-    const [limitPerUser, setLimitPerUser] = useState();
+    const [limitPerUser, setLimitPerUser] = useState(false);
     const [discountVis, setDiscountVis] = useState(true);
     const [minPurchase, setMinPurchase] = useState(true);
+    const [applyToField, setApplyToField] = useState(false)
+    const [Discountcode , setDiscountcode] = useState("")
+
+    const handleApplyField = (bool) => {
+        setApplyToField(bool)
+    }
+
+    const generateCode = (e) => {
+        e.preventDefault();
+        setDiscountcode(Math.random().toString(36).slice(2));
+
+        // let newState = {...data};
+        // newState.couponCode = Discountcode
+
+        // setData((previousData) =>
+        //     {return {...previousData , couponCode : Discountcode}})
+
+        setData({...data, couponCode: Math.random().toString(36).slice(2)})
+    };
+
+    const addPrefix = (e) => {
+        if(data.couponCode ){
+            setData({...data, couponCode: "SHO-"+ data.couponCode })
+        }
+        console.log(Discountcode);
+    }
+
+
+
 
     const handleMinPurchaseVis = (bool) => {
         setMinPurchase(bool);
@@ -169,31 +276,29 @@ function Form() {
                         className="input m-y3"
                         placeholder="Coupon Name"
                     />
-                    {discountVis && (
-                        <div className="discountContainer">
-                            <label
-                                htmlFor="discount"
-                                className="block bold m-t3"
-                            >
-                                Discount Code*
-                            </label>
-                            <div>
-                                <button className="btn-outline m-r3">
-                                    Add Prefix
-                                </button>
-                                <input
-                                    type="text"
-                                    id="discount"
-                                    name="couponCode"
-                                    value={data.couponCode}
-                                    onChange={handleInput}
-                                    className="input m-y3 m-r3"
-                                    placeholder="Add Code"
-                                />
-                                <button className="bold btn">Generate</button>
-                            </div>
+{/* ============== discount code ========= */}
+                    <div className="discountContainer">
+                        <label htmlFor="discount" className="block bold m-t3">
+                            Discount Code*
+                        </label>
+                        <div>
+                            <button type="button" className="btn-outline m-r3" onClick={addPrefix}>
+                                Add Prefix
+                            </button>
+                            <input
+                                type="text"
+                                id="discount"
+                                name="couponCode"
+                                value={data.couponCode}
+                                // value={Discountcode}
+                                onChange={handleInput}
+                                className="input m-y3 m-r3"
+                                placeholder="Add Code"
+                            />
+                            <button className="bold btn" onClick={generateCode} >Generate</button>
                         </div>
-                    )}
+                    </div>
+{/* =========== */}
                     <div className="tnc">
                         <label htmlFor="tnc" className="block bold">
                             Coupon Terms and Conditions*
@@ -214,12 +319,24 @@ function Form() {
                         onHandleVisibility={handleMinPurchaseVis}
                         onData={data}
                         onInputVal={handleInput}
+                        updateData={updateData}
+                        setProducts={setProducts}
+                        products={products}
+                        onHandleApplyTo={handleApplyField}
                     />
                     {/*======= */}
 
                     {/* ====*/}
                     <PurchaseType onData={data} onInputVal={handleInput} />
+                    {/* ====== */}
 
+                    {applyToField && <AppliesTo onData={data} onInputVal={handleInput}
+                      setProducts={setProducts}
+                      products={products}
+                    />}
+
+                    {/* ====== */}
+                    <CustomerEligibility onData={data} onInputVal={handleInput}/>
                     {/* ====*/}
 
                     {minPurchase && (

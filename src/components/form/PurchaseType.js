@@ -9,7 +9,7 @@ function PurchaseType(props) {
                 <input
                     type="radio"
                     id="oneTime"
-                    name="valueType"
+                    name="purchaseType"
                     value='1'
                     onChange={props.onInputVal}
                     className="m-r3"
@@ -21,7 +21,7 @@ function PurchaseType(props) {
                 <input
                     type="radio"
                     id="subcription"
-                    name="valueType"
+                    name="purchaseType"
                     value='2'
                     onChange={props.onInputVal}
                     className="m-r3"
@@ -30,7 +30,7 @@ function PurchaseType(props) {
             </div>
 
             <div className="block m-t3">
-                <input type="radio" id="both" name="valueType" value='3' onChange={props.onInputVal} className="m-r3" />
+                <input type="radio" id="both" name="purchaseType" value='3' onChange={props.onInputVal} className="m-r3" />
                 <label htmlFor="both">Both</label>
             </div>
         </>
